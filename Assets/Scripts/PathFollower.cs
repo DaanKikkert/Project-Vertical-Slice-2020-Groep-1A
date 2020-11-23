@@ -11,6 +11,8 @@ public class PathFollower : MonoBehaviour
     [SerializeField] private float _arrivalthreshold = 0.1f;
 
     [SerializeField] private UnityEvent _OnPathComplete;
+    [SerializeField] private GameObject _currentObject;
+    [SerializeField] private GameObject _prefab;
     public UnityEvent OnPathComplete => _OnPathComplete;
 
     private int _currentWaypointIndex;
@@ -18,13 +20,24 @@ public class PathFollower : MonoBehaviour
     private void Start()
     {
         _currentWaypointIndex = 0;
+        Vector2 position = _currentObject.transform.position;
+        
+        GameObject waypoint =
+        Instantiate(_prefab,
+        new Vector2(position.x -0.50f, position.y -1),
+        Quaternion.identity) as GameObject;
+
+        if (waypoint.active) Debug.Log("Succesfully instantiated prefab at coords: " + waypoint.transform.position);
+        
+         else Debug.Log("Cant instantiate prefab");
+        
     }
 
     private void Update()
     {
-        Vector3 heightOffsetPosition = new Vector3(_waypoints[_currentWaypointIndex].Position.x,
-            transform.position.y, _waypoints[_currentWaypointIndex].Position.z);
-        float distance = Vector3.Distance(transform.position, heightOffsetPosition);
+        Vector2 heightOffsetPosition = new Vector2(_waypoints[_currentWaypointIndex].Position.x,
+            _waypoints[_currentWaypointIndex].Position.y); // , _waypoints[_currentWaypointIndex].Position.z
+        float distance = Vector2.Distance(transform.position, heightOffsetPosition);
         //pathDrawer();
         if (distance <= _arrivalthreshold)
         {
@@ -55,8 +68,8 @@ public class PathFollower : MonoBehaviour
     {
         for (int i = 1; i < _waypoints.Length; i++)
         {
-            Vector3 firstLocation = _waypoints[i - 1].Position;
-            Vector3 lastLocation = _waypoints[i].Position;
+            Vector2 firstLocation = _waypoints[i - 1].Position;
+            Vector2 lastLocation = _waypoints[i].Position;
 
             Handles.DrawLine(firstLocation, lastLocation);
         }
