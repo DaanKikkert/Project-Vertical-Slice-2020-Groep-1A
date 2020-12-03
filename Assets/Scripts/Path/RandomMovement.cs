@@ -28,9 +28,14 @@ public class RandomMovement : MonoBehaviour
 
     private void Update()
     {
+      Movement();
+    }
+
+    private void Movement()
+    {
         transform.position = Vector2.MoveTowards(transform.position, moveSpots[randomSpot].position, speed * Time.deltaTime);
-      //  Debug.Log("Moving towards: " + transform.position);
-      //  Debug.Log("Extra debugs: " + transform.position + " Object name: " + transform.name);
+        //  Debug.Log("Moving towards: " + transform.position);
+        //  Debug.Log("Extra debugs: " + transform.position + " Object name: " + transform.name);
         OnMoveEvent?.Invoke();
         if(Vector2.Distance(transform.position, moveSpots[randomSpot].position) < distance)
         {
