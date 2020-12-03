@@ -28,6 +28,7 @@ public class ParentHealth : MonoBehaviour
 
     void Update()
     {
+<<<<<<< Updated upstream
         float dmg = 1f;
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -39,11 +40,36 @@ public class ParentHealth : MonoBehaviour
             }
 
         }
+=======
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage();
+            
+            
+        }
+    }
+    public void TakeDamage()
+    {
+        float dmg = 1f;
+        _currentHealth -= dmg;
+        print("Taking damage");
+
+        if (_currentHealth <= 0)
+        {
+            Death();
+            print("Death");
+        }
+
+>>>>>>> Stashed changes
     }
 
     public void Death()
     {
         Destroy(gameObject);
+<<<<<<< Updated upstream
         print("Death");
+=======
+        
+>>>>>>> Stashed changes
     }
 }
