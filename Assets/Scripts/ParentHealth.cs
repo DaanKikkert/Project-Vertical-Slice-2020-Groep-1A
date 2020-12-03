@@ -8,7 +8,6 @@ public class ParentHealth : MonoBehaviour
 {
 
     [SerializeField] private float _startHealth = 5f;
-
     private float _currentHealth;
 
     private void Start()
@@ -16,19 +15,8 @@ public class ParentHealth : MonoBehaviour
         _currentHealth = _startHealth;
     }
 
-    // Called from UnityEvent
-    //public void TakeDamage(float dmg = 1f)
-    //{
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-            
-        //}
-
-//    }
-
     void Update()
-    {
-<<<<<<< Updated upstream
+    { 
         float dmg = 1f;
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -38,14 +26,10 @@ public class ParentHealth : MonoBehaviour
             {
                 Death();
             }
-
         }
-=======
         if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage();
-            
-            
         }
     }
     public void TakeDamage()
@@ -59,17 +43,11 @@ public class ParentHealth : MonoBehaviour
             Death();
             print("Death");
         }
-
->>>>>>> Stashed changes
     }
 
     public void Death()
     {
         Destroy(gameObject);
-<<<<<<< Updated upstream
         print("Death");
-=======
-        
->>>>>>> Stashed changes
     }
 }
