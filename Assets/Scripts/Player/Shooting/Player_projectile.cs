@@ -13,6 +13,8 @@ public class Player_projectile : MonoBehaviour
     float pVelocityX;
     float pVelocityY;
     [SerializeField] private int velDiv;
+    [SerializeField] private float force;
+    [SerializeField] private GameObject explosion;
 
     public float dmg;
 
@@ -37,8 +39,7 @@ public class Player_projectile : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        Debug.Log(rigidb.velocity.x);
+    {        
         switch (_shootDirection)
         {
             case 1:
@@ -61,13 +62,18 @@ public class Player_projectile : MonoBehaviour
     {
         if(collision.tag != "Player")
         {
-            if (collision.tag == "Enemy")
+            if (collision.tag != "No proj")
             {
-                Health enemyHealth = collision.gameObject.GetComponent<Health>();
-                enemyHealth.TakeDamage(dmg);
+                if (collision.tag == "Enemy")
+                {
+                    Health enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+                    enemyHealth.TakeDamage(dmg);
+                    Destroy(this.gameObject);
+                    collision.attachedRigidbody.AddForce(this.gameObject.transform.forward.normalized * force);
+                }
+                Instantiate(explosion, this.gameObject.transform.position, this.gameObject.transform.rotation);
                 Destroy(this.gameObject);
             }
-            Destroy(this.gameObject);
         }        
     }
 }

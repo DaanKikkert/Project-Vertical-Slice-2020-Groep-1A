@@ -5,8 +5,8 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private float _startHealth;
-    [SerializeField] private float _currentHealth;    
-
+    [SerializeField] private float _currentHealth;
+    
 
     void Awake()
     {
@@ -14,12 +14,13 @@ public class Health : MonoBehaviour
         _currentHealth = _startHealth;
     }
 
-    public void TakeDamage(float _dmg)
+    public virtual void TakeDamage(float _dmg)
     {
         //Doet de damage door dmg van currentHealth af te halen
         _currentHealth -= _dmg;
+        
         //Print zet de hp die over is in het console.
-        print(_currentHealth);
+        //print(_currentHealth);
 
         if (_currentHealth <= 0f)
         {
@@ -28,10 +29,12 @@ public class Health : MonoBehaviour
 
     }
 
-    void Death()
+    public virtual void Death()
     {
         Destroy(this.gameObject);
         print("death");
     }
+
+    
 }
 

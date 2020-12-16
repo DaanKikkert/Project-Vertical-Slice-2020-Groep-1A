@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6670928816133934025}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 4, y: 4, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -98,9 +98,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shooting: {fileID: 4679393599334147689, guid: 85aa853f58a33e44e8d675c6fb7f0961, type: 3}
   _shootDirection: 0
-  speed: 5
+  speed: 8
   fallTimer: 1
   velDiv: 4
+  force: 1000
+  explosion: {fileID: 3372303729262986346, guid: 6d0a887b1508a9541be95acb61b6a392, type: 3}
   dmg: 2
 --- !u!70 &7486158823931147235
 CapsuleCollider2D:

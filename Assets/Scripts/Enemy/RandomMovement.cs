@@ -13,7 +13,7 @@ public class RandomMovement : MonoBehaviour
     [SerializeField] private UnityEvent OnMoveEvent;
     [SerializeField] private float MaxWT;
     [SerializeField] private float walktime;
-
+    
     [SerializeField] private Transform[] moveSpots;
     private int randomSpot;
 
@@ -24,13 +24,22 @@ public class RandomMovement : MonoBehaviour
 
     private void Start()
     {
+        GameObject[] movePoints = GameObject.FindGameObjectsWithTag("MovePoints");
+        moveSpots = new Transform[movePoints.Length];
+
+       for(int i = 0; i < moveSpots.Length; ++i)
+        {
+            moveSpots[i] = movePoints[i].transform;
+        }
+
+
         randomSpot = Random.Range(0, moveSpots.Length);
         waitTime = startWaitTime;
     }
 
     private void Update()
-    {
-        Movement();
+    {        
+        Movement();        
     }
 
     private void Movement()

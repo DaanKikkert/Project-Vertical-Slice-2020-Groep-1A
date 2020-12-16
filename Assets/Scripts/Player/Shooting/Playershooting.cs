@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class Playershooting : MonoBehaviour
 {
-    [SerializeField] private Transform[] shootPoints;
+    [SerializeField] private Transform[] shootPointsL;
+    [SerializeField] private Transform[] shootPointsR;
+    private bool currentEye = false;
+    Vector3 _instantiateLocation;
+
     [SerializeField] private GameObject Projectile;
     public int shootDirection;
     [SerializeField] private float shootDelay;
-    private float shootTimer;    
-    
+    private float shootTimer;
+    [SerializeField] private Animator shootAnim;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] audioClips;
+
+    private void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         shootTimer -= 1f * Time.deltaTime;
@@ -27,25 +32,29 @@ public class Playershooting : MonoBehaviour
             {
                 shootDirection = 1;
                 Shoot(0);
-                
+                playRandomAudio();
+                shootAnim.SetTrigger("ShootDown");
             }
             else if (Input.GetKey(KeyCode.RightArrow))
             {
                 shootDirection = 2;
                 Shoot(1);
-                
+                playRandomAudio();
+                shootAnim.SetTrigger("ShootRight");
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
                 shootDirection = 3;
                 Shoot(2);
-                
+                playRandomAudio();
+                shootAnim.SetTrigger("ShootLeft");
             }
             else if (Input.GetKey(KeyCode.UpArrow))
             {
                 shootDirection = 4;
                 Shoot(3);
-                
+                playRandomAudio();
+                shootAnim.SetTrigger("ShootUp");
             }
             
             
@@ -53,10 +62,28 @@ public class Playershooting : MonoBehaviour
         //Debug.Log(shootTimer);
     }
 
+    void playRandomAudio()
+    {
+        audioSource.clip = audioClips[Random.Range(0, audioClips.Length)];
+        audioSource.Play();
+    }
+
     void Shoot(int _shootpoint)
     {
-        Vector3 _instantiateLocation = new Vector3(shootPoints[_shootpoint].transform.position.x, shootPoints[_shootpoint].transform.position.y, shootPoints[_shootpoint].transform.position.z);
-        Instantiate(Projectile, _instantiateLocation, this.gameObject.transform.rotation);
+        
+        if (currentEye == false)
+        {
+            Vector3 _instantiateLocation = new Vector3(shootPointsL[_shootpoint].transform.position.x, shootPointsL[_shootpoint].transform.position.y, shootPointsL[_shootpoint].transform.position.z);
+            currentEye = true;
+            Instantiate(Projectile, _instantiateLocation, this.gameObject.transform.rotation);
+        }
+        else if (currentEye == true)
+        {
+            Vector3 _instantiateLocation = new Vector3(shootPointsR[_shootpoint].transform.position.x, shootPointsR[_shootpoint].transform.position.y, shootPointsR[_shootpoint].transform.position.z);
+            currentEye = false;
+            Instantiate(Projectile, _instantiateLocation, this.gameObject.transform.rotation);
+        }
+        //Instantiate(Projectile, _instantiateLocation, this.gameObject.transform.rotation);
         shootTimer = shootDelay;
     }
 }
